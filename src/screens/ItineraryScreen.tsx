@@ -18,7 +18,6 @@ import { PhotoGallery } from '../components/PhotoGallery';
 import {
   shareItinerary,
   shareItinerarySummary,
-  exportItineraryAsJSON,
 } from '../services/shareService';
 import { shareItineraryAsPDF } from '../services/pdfService';
 
@@ -41,7 +40,7 @@ export const ItineraryScreen: React.FC<ItineraryScreenProps> = ({
     if (Platform.OS === 'ios') {
       ActionSheetIOS.showActionSheetWithOptions(
         {
-          options: ['Cancel', 'Share as PDF', 'Share as Text', 'Share Summary', 'Export JSON'],
+          options: ['Cancel', 'Share as PDF', 'Share as Text', 'Share Summary'],
           cancelButtonIndex: 0,
         },
         (buttonIndex) => {
@@ -51,8 +50,6 @@ export const ItineraryScreen: React.FC<ItineraryScreenProps> = ({
             shareItinerary(itinerary);
           } else if (buttonIndex === 3) {
             shareItinerarySummary(itinerary);
-          } else if (buttonIndex === 4) {
-            exportItineraryAsJSON(itinerary);
           }
         }
       );
@@ -73,10 +70,6 @@ export const ItineraryScreen: React.FC<ItineraryScreenProps> = ({
           {
             text: 'Summary Only',
             onPress: () => shareItinerarySummary(itinerary),
-          },
-          {
-            text: 'Export JSON',
-            onPress: () => exportItineraryAsJSON(itinerary),
           },
         ],
         { cancelable: true }

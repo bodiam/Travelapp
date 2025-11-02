@@ -15,7 +15,6 @@ A mobile application that uses AI to create personalized travel itineraries. Bui
   - PDF Document (formatted with photos and styling)
   - Text Format (plain text for messaging)
   - Summary Only (quick overview)
-  - JSON Export (for developers)
 - **Local Storage**: All itineraries are automatically saved to your device for offline access
 - **Saved Itineraries**: View, manage, and revisit your past travel plans
 - **Interactive Maps**: View locations of activities and accommodations on integrated maps
