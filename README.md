@@ -1,27 +1,22 @@
 # AI Travel Itinerary App
 
-A mobile application that uses AI to create personalized travel itineraries. Built with React Native and powered by OpenAI's ChatGPT, this app generates comprehensive day-by-day travel plans including activities, accommodations, transportation, dining suggestions, photos, and interactive maps. All itineraries are automatically saved locally for offline access.
+A mobile application that uses AI to create personalized travel itineraries. Built with React Native and powered by OpenAI's ChatGPT, this app generates comprehensive day-by-day travel plans including activities, accommodations, transportation, dining suggestions, and interactive maps. All itineraries are automatically saved locally for offline access.
 
 ## Features
 
-- **AI-Powered Itinerary Generation**: Uses OpenAI's ChatGPT (GPT-4) to create detailed, personalized travel plans with rich, descriptive content
-- **Beautiful Photo Integration**: ChatGPT automatically includes stunning photos using free Unsplash Source URLs for:
-  - Destination galleries (5 different views)
-  - Individual activities
-  - Accommodations
-  - No additional API key required!
+- **AI-Powered Itinerary Generation**: Uses OpenAI's ChatGPT (GPT-4) to create detailed, personalized travel plans with rich, vivid descriptions
 - **PDF Export & Sharing**: Share your itineraries as beautifully formatted PDF documents via any app (WhatsApp, Email, etc.)
 - **Multiple Sharing Options**:
-  - PDF Document (formatted with photos and styling)
+  - PDF Document (professionally formatted)
   - Text Format (plain text for messaging)
   - Summary Only (quick overview)
 - **Local Storage**: All itineraries are automatically saved to your device for offline access
 - **Saved Itineraries**: View, manage, and revisit your past travel plans
 - **Interactive Maps**: View locations of activities and accommodations on integrated maps
 - **Detailed Daily Plans**: Get hour-by-hour breakdowns with:
-  - Activities and attractions with vivid descriptions
+  - Activities and attractions with vivid, descriptive text
   - Transportation recommendations (walking, driving, public transit, etc.)
-  - Hotel and accommodation suggestions with photos
+  - Hotel and accommodation suggestions with detailed amenities
   - Restaurant and dining recommendations
   - Estimated costs and durations
 - **Customizable Preferences**: Select your budget (budget/moderate/luxury) and pace (relaxed/moderate/packed)
@@ -32,21 +27,20 @@ A mobile application that uses AI to create personalized travel itineraries. Bui
 The app includes:
 - Clean, intuitive home screen for entering destination and dates
 - Saved itineraries browser for quick access to past trips
-- Share button to export as PDF or other formats
-- Photo gallery showcasing your destination
+- Share button to export as PDF or text
 - Day-by-day itinerary view with tabs
-- Detailed activity cards with times, rich descriptions, locations, and photos
-- Accommodation recommendations with amenities and photos
+- Detailed activity cards with times, rich descriptions, and locations
+- Accommodation recommendations with amenities
 - Transportation details between activities
 - Dining suggestions for each meal
-- Beautiful PDF export with formatted layout and images
+- Interactive maps showing activity locations
+- Beautiful PDF export with formatted layout
 
 ## Tech Stack
 
 - **React Native** with Expo
 - **TypeScript** for type safety
-- **OpenAI ChatGPT** (GPT-4) for itinerary generation and photo URLs
-- **Unsplash Source** (free, no API key) for photos via direct URLs
+- **OpenAI ChatGPT** (GPT-4) for itinerary generation
 - **Google Maps** / React Native Maps for location visualization
 - **AsyncStorage** for local data persistence
 - **expo-print** for PDF generation
@@ -82,8 +76,6 @@ You'll need to obtain the following API keys:
    - Go to Credentials
    - Create an API Key
    - Copy it
-
-**Photos**: No additional API key needed! ChatGPT automatically generates Unsplash Source URLs for free beautiful photos.
 
 ## Installation
 

@@ -26,12 +26,7 @@ ${preferences?.budget ? `- Budget: ${preferences.budget}` : ''}
 ${preferences?.interests?.length ? `- Interests: ${preferences.interests.join(', ')}` : ''}
 ${preferences?.pace ? `- Pace: ${preferences.pace}` : ''}
 
-Please create a comprehensive itinerary with the following structure in JSON format.
-
-IMPORTANT: For photos, use Unsplash Source URLs in this format:
-- Destination photos: https://source.unsplash.com/800x600/?${destination.toLowerCase().replace(/\s+/g, ',')}
-- Activity photos: https://source.unsplash.com/800x600/?ACTIVITY_NAME (replace ACTIVITY_NAME with the activity, e.g., "eiffel,tower")
-- Accommodation photos: https://source.unsplash.com/800x600/?hotel,CITY (replace CITY with destination)
+Please create a comprehensive itinerary with the following structure in JSON format:
 
 {
   "destination": "${destination}",
@@ -39,13 +34,6 @@ IMPORTANT: For photos, use Unsplash Source URLs in this format:
   "endDate": "${endDate.toISOString()}",
   "summary": "A brief 2-3 sentence overview of the trip with engaging descriptions",
   "estimatedBudget": "Total estimated budget range",
-  "photos": [
-    "https://source.unsplash.com/800x600/?${destination.toLowerCase().replace(/\s+/g, ',')}",
-    "https://source.unsplash.com/800x600/?${destination.toLowerCase().replace(/\s+/g, ',')},landmark",
-    "https://source.unsplash.com/800x600/?${destination.toLowerCase().replace(/\s+/g, ',')},architecture",
-    "https://source.unsplash.com/800x600/?${destination.toLowerCase().replace(/\s+/g, ',')},culture",
-    "https://source.unsplash.com/800x600/?${destination.toLowerCase().replace(/\s+/g, ',')},food"
-  ],
   "days": [
     {
       "day": 1,
@@ -62,7 +50,6 @@ IMPORTANT: For photos, use Unsplash Source URLs in this format:
           },
           "duration": "Estimated duration",
           "cost": "Estimated cost",
-          "photo": "https://source.unsplash.com/800x600/?ACTIVITY_KEYWORDS",
           "transport": {
             "mode": "walking|driving|public_transit|flight|train|taxi|bike",
             "duration": "Travel time",
@@ -76,8 +63,7 @@ IMPORTANT: For photos, use Unsplash Source URLs in this format:
         "type": "hotel|hostel|airbnb|resort",
         "address": "Full address",
         "priceRange": "Price per night",
-        "amenities": ["amenity1", "amenity2"],
-        "photo": "https://source.unsplash.com/800x600/?hotel,DESTINATION"
+        "amenities": ["amenity1", "amenity2"]
       },
       "meals": [
         {
