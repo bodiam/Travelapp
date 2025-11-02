@@ -1,9 +1,9 @@
-import Anthropic from '@anthropic-ai/sdk';
+import OpenAI from 'openai';
 import { ENV } from '../config/env';
 import { TravelRequest, TravelItinerary } from '../types';
 
-const anthropic = new Anthropic({
-  apiKey: ENV.ANTHROPIC_API_KEY,
+const openai = new OpenAI({
+  apiKey: ENV.OPENAI_API_KEY,
 });
 
 export const generateItinerary = async (
@@ -32,7 +32,7 @@ Please create a comprehensive itinerary with the following structure in JSON for
   "destination": "${destination}",
   "startDate": "${startDate.toISOString()}",
   "endDate": "${endDate.toISOString()}",
-  "summary": "A brief 2-3 sentence overview of the trip",
+  "summary": "A brief 2-3 sentence overview of the trip with engaging descriptions",
   "estimatedBudget": "Total estimated budget range",
   "days": [
     {
@@ -43,7 +43,7 @@ Please create a comprehensive itinerary with the following structure in JSON for
         {
           "time": "HH:MM AM/PM",
           "title": "Activity name",
-          "description": "Detailed description",
+          "description": "Detailed, vivid description of the activity (at least 2-3 sentences describing what makes this special, what to expect, and why it's worth visiting)",
           "location": {
             "name": "Location name",
             "address": "Full address if known"
@@ -68,7 +68,7 @@ Please create a comprehensive itinerary with the following structure in JSON for
       "meals": [
         {
           "type": "breakfast|lunch|dinner|snack",
-          "suggestion": "Restaurant or meal recommendation",
+          "suggestion": "Restaurant or meal recommendation with description",
           "location": "Location",
           "priceRange": "Price range"
         }
@@ -77,33 +77,38 @@ Please create a comprehensive itinerary with the following structure in JSON for
   ]
 }
 
-Important guidelines:
+IMPORTANT GUIDELINES:
 1. Include realistic times and durations for all activities
-2. Suggest appropriate transportation between locations
-3. Include hotel/accommodation recommendations for each night
-4. Suggest specific restaurants or dining options
-5. Consider travel time between activities
-6. Make the itinerary practical and achievable
-7. Include a mix of popular attractions and local experiences
-8. Consider opening hours and realistic scheduling
+2. Provide DETAILED, DESCRIPTIVE text for each activity (2-3 sentences minimum)
+3. Make descriptions vivid and engaging - describe the experience, atmosphere, and what makes each place special
+4. Suggest appropriate transportation between locations
+5. Include hotel/accommodation recommendations for each night
+6. Suggest specific restaurants or dining options with descriptions
+7. Consider travel time between activities
+8. Make the itinerary practical and achievable
+9. Include a mix of popular attractions and local experiences
+10. Consider opening hours and realistic scheduling
 
 Return ONLY the JSON object, no additional text or markdown formatting.`;
 
   try {
-    const message = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20241022',
-      max_tokens: 8096,
+    const completion = await openai.chat.completions.create({
+      model: 'gpt-4o',
       messages: [
+        {
+          role: 'system',
+          content: 'You are an expert travel planner who creates detailed, engaging itineraries with vivid descriptions. Always provide comprehensive details and make every description rich and informative.',
+        },
         {
           role: 'user',
           content: prompt,
         },
       ],
+      temperature: 0.7,
+      max_tokens: 4096,
     });
 
-    const responseText = message.content[0].type === 'text'
-      ? message.content[0].text
-      : '';
+    const responseText = completion.choices[0].message.content || '';
 
     // Clean the response to extract JSON
     let jsonText = responseText.trim();
@@ -119,6 +124,6 @@ Return ONLY the JSON object, no additional text or markdown formatting.`;
     return itinerary;
   } catch (error) {
     console.error('Error generating itinerary:', error);
-    throw new Error('Failed to generate itinerary. Please try again.');
+    throw new Error('Failed to generate itinerary. Please check your API key and try again.');
   }
 };

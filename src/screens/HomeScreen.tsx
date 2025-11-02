@@ -13,13 +13,15 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { TravelItinerary, TravelRequest } from '../types';
 import { generateItinerary } from '../services/aiService';
-import { getDestinationPhotos } from '../services/photoService';
+import { enrichItineraryWithPhotos } from '../services/photoService';
+import { saveItinerary } from '../services/storageService';
 
 interface HomeScreenProps {
   onItineraryGenerated: (itinerary: TravelItinerary) => void;
+  onViewSaved: () => void;
 }
 
-export const HomeScreen: React.FC<HomeScreenProps> = ({ onItineraryGenerated }) => {
+export const HomeScreen: React.FC<HomeScreenProps> = ({ onItineraryGenerated, onViewSaved }) => {
   const [destination, setDestination] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date(Date.now() + 7 * 24 * 60 * 60 * 1000));
@@ -55,11 +57,13 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onItineraryGenerated }) 
       };
 
       // Generate itinerary
-      const itinerary = await generateItinerary(request);
+      let itinerary = await generateItinerary(request);
 
-      // Fetch photos for the destination
-      const photos = await getDestinationPhotos(destination.trim(), 5);
-      itinerary.photos = photos;
+      // Enrich with photos for destination, activities, and accommodations
+      itinerary = await enrichItineraryWithPhotos(itinerary, destination.trim());
+
+      // Save itinerary locally
+      await saveItinerary(itinerary);
 
       onItineraryGenerated(itinerary);
     } catch (error) {
@@ -90,10 +94,22 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onItineraryGenerated }) 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
       <View style={styles.header}>
-        <Text style={styles.title}>AI Travel Planner</Text>
-        <Text style={styles.subtitle}>
-          Let AI create your perfect travel itinerary
-        </Text>
+        <View style={styles.headerTop}>
+          <View>
+            <Text style={styles.title}>AI Travel Planner</Text>
+            <Text style={styles.subtitle}>
+              Let AI create your perfect travel itinerary
+            </Text>
+          </View>
+          <TouchableOpacity
+            style={styles.savedButton}
+            onPress={onViewSaved}
+            disabled={loading}
+          >
+            <Text style={styles.savedButtonText}>📚</Text>
+            <Text style={styles.savedButtonLabel}>Saved</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       <View style={styles.form}>
@@ -237,6 +253,11 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     marginTop: 20,
   },
+  headerTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
@@ -246,6 +267,19 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 16,
     color: '#666',
+  },
+  savedButton: {
+    alignItems: 'center',
+    padding: 8,
+  },
+  savedButtonText: {
+    fontSize: 28,
+  },
+  savedButtonLabel: {
+    fontSize: 12,
+    color: '#007AFF',
+    fontWeight: '600',
+    marginTop: 2,
   },
   form: {
     backgroundColor: '#fff',

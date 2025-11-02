@@ -1,7 +1,7 @@
 // Copy this file to env.ts and replace with your actual API keys
 
 export const ENV = {
-  ANTHROPIC_API_KEY: 'your_anthropic_api_key_here',
+  OPENAI_API_KEY: 'your_openai_api_key_here',
   UNSPLASH_ACCESS_KEY: 'your_unsplash_access_key_here',
   GOOGLE_MAPS_API_KEY: 'your_google_maps_api_key_here',
 };
@@ -10,8 +10,8 @@ export const ENV = {
 export const validateEnv = () => {
   const missingKeys = [];
 
-  if (!ENV.ANTHROPIC_API_KEY || ENV.ANTHROPIC_API_KEY === 'your_anthropic_api_key_here') {
-    missingKeys.push('ANTHROPIC_API_KEY');
+  if (!ENV.OPENAI_API_KEY || ENV.OPENAI_API_KEY === 'your_openai_api_key_here') {
+    missingKeys.push('OPENAI_API_KEY');
   }
   if (!ENV.UNSPLASH_ACCESS_KEY || ENV.UNSPLASH_ACCESS_KEY === 'your_unsplash_access_key_here') {
     missingKeys.push('UNSPLASH_ACCESS_KEY');

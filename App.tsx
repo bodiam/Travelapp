@@ -3,10 +3,14 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, SafeAreaView, Alert } from 'react-native';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { ItineraryScreen } from './src/screens/ItineraryScreen';
+import { SavedItinerariesScreen } from './src/screens/SavedItinerariesScreen';
 import { TravelItinerary } from './src/types';
 import { validateEnv } from './src/config/env';
 
+type Screen = 'home' | 'itinerary' | 'saved';
+
 export default function App() {
+  const [currentScreen, setCurrentScreen] = useState<Screen>('home');
   const [itinerary, setItinerary] = useState<TravelItinerary | null>(null);
 
   useEffect(() => {
@@ -24,19 +28,40 @@ export default function App() {
 
   const handleItineraryGenerated = (newItinerary: TravelItinerary) => {
     setItinerary(newItinerary);
+    setCurrentScreen('itinerary');
   };
 
-  const handleBack = () => {
+  const handleViewSaved = () => {
+    setCurrentScreen('saved');
+  };
+
+  const handleSelectItinerary = (selectedItinerary: TravelItinerary) => {
+    setItinerary(selectedItinerary);
+    setCurrentScreen('itinerary');
+  };
+
+  const handleBackToHome = () => {
     setItinerary(null);
+    setCurrentScreen('home');
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
-      {itinerary ? (
-        <ItineraryScreen itinerary={itinerary} onBack={handleBack} />
-      ) : (
-        <HomeScreen onItineraryGenerated={handleItineraryGenerated} />
+      {currentScreen === 'home' && (
+        <HomeScreen
+          onItineraryGenerated={handleItineraryGenerated}
+          onViewSaved={handleViewSaved}
+        />
+      )}
+      {currentScreen === 'itinerary' && itinerary && (
+        <ItineraryScreen itinerary={itinerary} onBack={handleBackToHome} />
+      )}
+      {currentScreen === 'saved' && (
+        <SavedItinerariesScreen
+          onSelectItinerary={handleSelectItinerary}
+          onBack={handleBackToHome}
+        />
       )}
     </SafeAreaView>
   );
