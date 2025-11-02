@@ -13,7 +13,6 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { TravelItinerary, TravelRequest } from '../types';
 import { generateItinerary } from '../services/aiService';
-import { enrichItineraryWithPhotos } from '../services/photoService';
 import { saveItinerary } from '../services/storageService';
 
 interface HomeScreenProps {
@@ -56,11 +55,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onItineraryGenerated, on
         },
       };
 
-      // Generate itinerary
-      let itinerary = await generateItinerary(request);
-
-      // Enrich with photos for destination, activities, and accommodations
-      itinerary = await enrichItineraryWithPhotos(itinerary, destination.trim());
+      // Generate itinerary (now includes photos from ChatGPT)
+      const itinerary = await generateItinerary(request);
 
       // Save itinerary locally
       await saveItinerary(itinerary);

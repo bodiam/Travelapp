@@ -5,10 +5,17 @@ A mobile application that uses AI to create personalized travel itineraries. Bui
 ## Features
 
 - **AI-Powered Itinerary Generation**: Uses OpenAI's ChatGPT (GPT-4) to create detailed, personalized travel plans with rich, descriptive content
-- **Beautiful Photo Integration**: Automatically fetches stunning photos from Unsplash for:
-  - Destination galleries
+- **Beautiful Photo Integration**: ChatGPT automatically includes stunning photos using free Unsplash Source URLs for:
+  - Destination galleries (5 different views)
   - Individual activities
   - Accommodations
+  - No additional API key required!
+- **PDF Export & Sharing**: Share your itineraries as beautifully formatted PDF documents via any app (WhatsApp, Email, etc.)
+- **Multiple Sharing Options**:
+  - PDF Document (formatted with photos and styling)
+  - Text Format (plain text for messaging)
+  - Summary Only (quick overview)
+  - JSON Export (for developers)
 - **Local Storage**: All itineraries are automatically saved to your device for offline access
 - **Saved Itineraries**: View, manage, and revisit your past travel plans
 - **Interactive Maps**: View locations of activities and accommodations on integrated maps
@@ -26,23 +33,27 @@ A mobile application that uses AI to create personalized travel itineraries. Bui
 The app includes:
 - Clean, intuitive home screen for entering destination and dates
 - Saved itineraries browser for quick access to past trips
+- Share button to export as PDF or other formats
 - Photo gallery showcasing your destination
 - Day-by-day itinerary view with tabs
 - Detailed activity cards with times, rich descriptions, locations, and photos
 - Accommodation recommendations with amenities and photos
 - Transportation details between activities
 - Dining suggestions for each meal
+- Beautiful PDF export with formatted layout and images
 
 ## Tech Stack
 
 - **React Native** with Expo
 - **TypeScript** for type safety
-- **OpenAI ChatGPT** (GPT-4) for itinerary generation
-- **Unsplash API** for destination, activity, and accommodation photos
+- **OpenAI ChatGPT** (GPT-4) for itinerary generation and photo URLs
+- **Unsplash Source** (free, no API key) for photos via direct URLs
 - **Google Maps** / React Native Maps for location visualization
 - **AsyncStorage** for local data persistence
+- **expo-print** for PDF generation
+- **expo-sharing** for sharing functionality
+- **expo-file-system** for file operations
 - **openai** npm package for AI integration
-- **Axios** for HTTP requests
 
 ## Prerequisites
 
@@ -63,19 +74,17 @@ You'll need to obtain the following API keys:
    - Navigate to API Keys section
    - Create a new API key
    - This is used for AI-powered itinerary generation with ChatGPT
+   - **Note**: Requires a paid account with available credits
 
-2. **Unsplash Access Key** (Required)
-   - Create a developer account at: https://unsplash.com/developers
-   - Create a new application
-   - Copy your Access Key
-   - This is used to fetch destination photos
-
-3. **Google Maps API Key** (Required for maps)
+2. **Google Maps API Key** (Required)
    - Go to: https://console.cloud.google.com/
-   - Create a new project or select existing one
+   - Create a new project or select existing
    - Enable "Maps SDK for Android" and "Maps SDK for iOS"
-   - Create credentials (API Key)
-   - This is used for displaying maps
+   - Go to Credentials
+   - Create an API Key
+   - Copy it
+
+**Photos**: No additional API key needed! ChatGPT automatically generates Unsplash Source URLs for free beautiful photos.
 
 ## Installation
 
@@ -103,7 +112,6 @@ Then open `src/config/env.ts` and replace the placeholder values with your actua
 ```typescript
 export const ENV = {
   OPENAI_API_KEY: 'sk-...',  // Your OpenAI API key
-  UNSPLASH_ACCESS_KEY: 'abc123...',  // Your Unsplash Access Key
   GOOGLE_MAPS_API_KEY: 'AIza...',  // Your Google Maps API key
 };
 ```

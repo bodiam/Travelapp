@@ -2,7 +2,6 @@
 
 export const ENV = {
   OPENAI_API_KEY: 'your_openai_api_key_here',
-  UNSPLASH_ACCESS_KEY: 'your_unsplash_access_key_here',
   GOOGLE_MAPS_API_KEY: 'your_google_maps_api_key_here',
 };
 
@@ -12,9 +11,6 @@ export const validateEnv = () => {
 
   if (!ENV.OPENAI_API_KEY || ENV.OPENAI_API_KEY === 'your_openai_api_key_here') {
     missingKeys.push('OPENAI_API_KEY');
-  }
-  if (!ENV.UNSPLASH_ACCESS_KEY || ENV.UNSPLASH_ACCESS_KEY === 'your_unsplash_access_key_here') {
-    missingKeys.push('UNSPLASH_ACCESS_KEY');
   }
   if (!ENV.GOOGLE_MAPS_API_KEY || ENV.GOOGLE_MAPS_API_KEY === 'your_google_maps_api_key_here') {
     missingKeys.push('GOOGLE_MAPS_API_KEY');

@@ -7,11 +7,20 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
+  Alert,
+  ActionSheetIOS,
+  Platform,
 } from 'react-native';
 import { TravelItinerary } from '../types';
 import { ActivityCard } from '../components/ActivityCard';
 import { AccommodationCard } from '../components/AccommodationCard';
 import { PhotoGallery } from '../components/PhotoGallery';
+import {
+  shareItinerary,
+  shareItinerarySummary,
+  exportItineraryAsJSON,
+} from '../services/shareService';
+import { shareItineraryAsPDF } from '../services/pdfService';
 
 interface ItineraryScreenProps {
   itinerary: TravelItinerary;
@@ -28,12 +37,64 @@ export const ItineraryScreen: React.FC<ItineraryScreenProps> = ({
 
   const currentDay = itinerary.days[selectedDay];
 
+  const handleShare = () => {
+    if (Platform.OS === 'ios') {
+      ActionSheetIOS.showActionSheetWithOptions(
+        {
+          options: ['Cancel', 'Share as PDF', 'Share as Text', 'Share Summary', 'Export JSON'],
+          cancelButtonIndex: 0,
+        },
+        (buttonIndex) => {
+          if (buttonIndex === 1) {
+            shareItineraryAsPDF(itinerary);
+          } else if (buttonIndex === 2) {
+            shareItinerary(itinerary);
+          } else if (buttonIndex === 3) {
+            shareItinerarySummary(itinerary);
+          } else if (buttonIndex === 4) {
+            exportItineraryAsJSON(itinerary);
+          }
+        }
+      );
+    } else {
+      Alert.alert(
+        'Share Itinerary',
+        'Choose how you want to share',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          {
+            text: 'PDF Document',
+            onPress: () => shareItineraryAsPDF(itinerary),
+          },
+          {
+            text: 'Text Format',
+            onPress: () => shareItinerary(itinerary),
+          },
+          {
+            text: 'Summary Only',
+            onPress: () => shareItinerarySummary(itinerary),
+          },
+          {
+            text: 'Export JSON',
+            onPress: () => exportItineraryAsJSON(itinerary),
+          },
+        ],
+        { cancelable: true }
+      );
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={onBack} style={styles.backButton}>
-          <Text style={styles.backButtonText}>← Back</Text>
-        </TouchableOpacity>
+        <View style={styles.headerTop}>
+          <TouchableOpacity onPress={onBack} style={styles.backButton}>
+            <Text style={styles.backButtonText}>← Back</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleShare} style={styles.shareButton}>
+            <Text style={styles.shareButtonText}>📤</Text>
+          </TouchableOpacity>
+        </View>
         <Text style={styles.headerTitle}>{itinerary.destination}</Text>
         <Text style={styles.headerSubtitle}>
           {new Date(itinerary.startDate).toLocaleDateString()} -{' '}
@@ -140,12 +201,24 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 50,
   },
-  backButton: {
+  headerTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 12,
+  },
+  backButton: {
+    padding: 4,
   },
   backButtonText: {
     color: '#fff',
     fontSize: 16,
+  },
+  shareButton: {
+    padding: 4,
+  },
+  shareButtonText: {
+    fontSize: 24,
   },
   headerTitle: {
     fontSize: 28,
