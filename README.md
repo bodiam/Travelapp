@@ -1,16 +1,21 @@
 # AI Travel Itinerary App
 
-A mobile application that uses AI to create personalized travel itineraries. Built with React Native and powered by Claude AI, this app generates comprehensive day-by-day travel plans including activities, accommodations, transportation, dining suggestions, photos, and interactive maps.
+A mobile application that uses AI to create personalized travel itineraries. Built with React Native and powered by OpenAI's ChatGPT, this app generates comprehensive day-by-day travel plans including activities, accommodations, transportation, dining suggestions, photos, and interactive maps. All itineraries are automatically saved locally for offline access.
 
 ## Features
 
-- **AI-Powered Itinerary Generation**: Uses Claude AI to create detailed, personalized travel plans
-- **Beautiful Photo Integration**: Automatically fetches stunning destination photos from Unsplash
+- **AI-Powered Itinerary Generation**: Uses OpenAI's ChatGPT (GPT-4) to create detailed, personalized travel plans with rich, descriptive content
+- **Beautiful Photo Integration**: Automatically fetches stunning photos from Unsplash for:
+  - Destination galleries
+  - Individual activities
+  - Accommodations
+- **Local Storage**: All itineraries are automatically saved to your device for offline access
+- **Saved Itineraries**: View, manage, and revisit your past travel plans
 - **Interactive Maps**: View locations of activities and accommodations on integrated maps
 - **Detailed Daily Plans**: Get hour-by-hour breakdowns with:
-  - Activities and attractions
+  - Activities and attractions with vivid descriptions
   - Transportation recommendations (walking, driving, public transit, etc.)
-  - Hotel and accommodation suggestions
+  - Hotel and accommodation suggestions with photos
   - Restaurant and dining recommendations
   - Estimated costs and durations
 - **Customizable Preferences**: Select your budget (budget/moderate/luxury) and pace (relaxed/moderate/packed)
@@ -20,10 +25,11 @@ A mobile application that uses AI to create personalized travel itineraries. Bui
 
 The app includes:
 - Clean, intuitive home screen for entering destination and dates
+- Saved itineraries browser for quick access to past trips
 - Photo gallery showcasing your destination
 - Day-by-day itinerary view with tabs
-- Detailed activity cards with times, descriptions, and locations
-- Accommodation recommendations with amenities
+- Detailed activity cards with times, rich descriptions, locations, and photos
+- Accommodation recommendations with amenities and photos
 - Transportation details between activities
 - Dining suggestions for each meal
 
@@ -31,10 +37,11 @@ The app includes:
 
 - **React Native** with Expo
 - **TypeScript** for type safety
-- **Claude AI** (Anthropic) for itinerary generation
-- **Unsplash API** for destination photos
+- **OpenAI ChatGPT** (GPT-4) for itinerary generation
+- **Unsplash API** for destination, activity, and accommodation photos
 - **Google Maps** / React Native Maps for location visualization
-- **@anthropic-ai/sdk** for AI integration
+- **AsyncStorage** for local data persistence
+- **openai** npm package for AI integration
 - **Axios** for HTTP requests
 
 ## Prerequisites
@@ -51,10 +58,11 @@ Before you begin, ensure you have:
 
 You'll need to obtain the following API keys:
 
-1. **Anthropic API Key** (Required)
-   - Sign up at: https://console.anthropic.com/
-   - Generate an API key from your dashboard
-   - This is used for AI-powered itinerary generation
+1. **OpenAI API Key** (Required)
+   - Sign up at: https://platform.openai.com/
+   - Navigate to API Keys section
+   - Create a new API key
+   - This is used for AI-powered itinerary generation with ChatGPT
 
 2. **Unsplash Access Key** (Required)
    - Create a developer account at: https://unsplash.com/developers
@@ -94,9 +102,9 @@ Then open `src/config/env.ts` and replace the placeholder values with your actua
 
 ```typescript
 export const ENV = {
-  ANTHROPIC_API_KEY: 'your_anthropic_api_key_here',
-  UNSPLASH_ACCESS_KEY: 'your_unsplash_access_key_here',
-  GOOGLE_MAPS_API_KEY: 'your_google_maps_api_key_here',
+  OPENAI_API_KEY: 'sk-...',  // Your OpenAI API key
+  UNSPLASH_ACCESS_KEY: 'abc123...',  // Your Unsplash Access Key
+  GOOGLE_MAPS_API_KEY: 'AIza...',  // Your Google Maps API key
 };
 ```
 

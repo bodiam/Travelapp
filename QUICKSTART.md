@@ -12,12 +12,12 @@ npm install
 
 You need 3 API keys:
 
-### Anthropic API Key (Required)
-1. Go to https://console.anthropic.com/
+### OpenAI API Key (Required)
+1. Go to https://platform.openai.com/
 2. Sign up or log in
-3. Navigate to API Keys
+3. Navigate to API Keys section
 4. Create a new API key
-5. Copy it
+5. Copy it (starts with sk-)
 
 ### Unsplash Access Key (Required)
 1. Go to https://unsplash.com/developers
@@ -47,7 +47,7 @@ Edit `src/config/env.ts` and paste your API keys:
 
 ```typescript
 export const ENV = {
-  ANTHROPIC_API_KEY: 'sk-ant-...',  // Your Anthropic key
+  OPENAI_API_KEY: 'sk-...',  // Your OpenAI API key
   UNSPLASH_ACCESS_KEY: 'abc123...',  // Your Unsplash key
   GOOGLE_MAPS_API_KEY: 'AIza...',    // Your Google Maps key
 };
@@ -109,17 +109,20 @@ npx expo start -c
 - Verify you're using the Access Key, not the Secret Key
 
 ### Itinerary generation fails
-- Ensure your Anthropic API key is valid
-- Check that you have credits/quota available
+- Ensure your OpenAI API key is valid
+- Check that you have credits/quota available (OpenAI requires payment)
 - Look for error messages in the console
 
 ## What's Next?
 
 - Explore different destinations
 - Try different budget and pace settings
-- Check out the day-by-day breakdown
+- Check out the day-by-day breakdown with rich descriptions
 - View locations on the map
 - Browse destination photos
+- View saved itineraries by tapping the "Saved" button
+- Revisit your past travel plans anytime
+- Each itinerary automatically includes photos for activities and accommodations!
 
 ## Need Help?
 
